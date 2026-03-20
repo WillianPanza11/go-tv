@@ -1,0 +1,16 @@
+/* client/src/assets/main.css */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+  background: #0a0a0f;
+  color: #f0f0f5;
+}
+
+#app {
+  height: 100%;
+}
