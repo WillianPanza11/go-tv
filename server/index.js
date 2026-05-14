@@ -10,6 +10,8 @@ import authRoutes     from './routes/auth.js';
 import videoRoutes    from './routes/videos.js';
 import categoryRoutes from './routes/categories.js';
 import commentRoutes  from './routes/comments.js';
+import documentRoutes from './routes/documents.js';
+import apkRoutes      from './routes/apks.js';
 
 dotenv.config();
 
@@ -66,6 +68,8 @@ app.use('/api/auth',       authRoutes);
 app.use('/api/videos',     videoRoutes);
 app.use('/api/categories', categoryRoutes);
 app.use('/api/comments',   commentRoutes);
+app.use('/api/documents',  documentRoutes);
+app.use('/api/apks',       apkRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando correctamente' });

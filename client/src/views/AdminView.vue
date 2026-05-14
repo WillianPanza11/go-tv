@@ -25,13 +25,14 @@
 
             <div class="field">
               <label>Título *</label>
-              <input v-model="videoForm.titulo" type="text" placeholder="Ej: Cómo reiniciar el servicio de impresión" />
+              <input v-model="videoForm.titulo" type="text" placeholder="Ej: Cómo reiniciar el servicio de impresión" @input="videoForm.titulo = sanitize(videoForm.titulo)" />
             </div>
 
             <div class="field">
               <label>Descripción</label>
               <textarea v-model="videoForm.descripcion" rows="3"
-                placeholder="Describe brevemente el tutorial..."></textarea>
+                placeholder="Describe brevemente el tutorial..."
+                @input="videoForm.descripcion = sanitize(videoForm.descripcion)"></textarea>
             </div>
 
             <div class="field">
@@ -91,7 +92,7 @@
           <form @submit.prevent="submitCategory" class="category-form">
             <div class="field">
               <label>Nombre *</label>
-              <input v-model="catForm.nombre" type="text" placeholder="Ej: Windows, Red, Impresoras..." />
+              <input v-model="catForm.nombre" type="text" placeholder="Ej: Windows, Red, Impresoras..." @input="catForm.nombre = sanitize(catForm.nombre)" />
             </div>
             <div class="field">
               <label>Color</label>
@@ -161,6 +162,8 @@ import api from '../config/axios.js'
 
 const router = useRouter()
 const authStore = useAuthStore()
+
+const sanitize = (val) => val.replace(/[^a-zA-ZáéíóúüñÁÉÍÓÚÜÑ0-9 @_]/g, '')
 
 // ── Estado ────────────────────────────────────────────
 const videos = ref([])

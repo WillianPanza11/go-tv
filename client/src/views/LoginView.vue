@@ -25,6 +25,7 @@
             placeholder="Ingresa tu usuario"
             autocomplete="username"
             :disabled="loading"
+            @input="username = sanitize(username)"
           />
         </div>
 
@@ -67,10 +68,18 @@ const password = ref('')
 const loading  = ref(false)
 const error    = ref('')
 
+const ALLOWED = /^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ0-9 @_]*$/
+const sanitize = (val) => val.replace(/[^a-zA-ZáéíóúüñÁÉÍÓÚÜÑ0-9 @_]/g, '')
+
 const handleLogin = async () => {
   error.value   = ''
-  loading.value = true
 
+  if (!ALLOWED.test(password.value)) {
+    error.value = 'Solo se permiten letras, números, @ y _.'
+    return
+  }
+
+  loading.value = true
   try {
     await authStore.login(username.value, password.value)
     router.push('/catalogo')

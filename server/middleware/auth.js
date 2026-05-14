@@ -5,9 +5,8 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 const authMiddleware = (req, res, next) => {
-  // Busca el token en el header Authorization: Bearer <token>
   const authHeader = req.headers['authorization'];
-  const token = authHeader && authHeader.split(' ')[1]; // extrae solo el token
+  const token = (authHeader && authHeader.split(' ')[1]) || req.query.token;
 
   if (!token) {
     return res.status(401).json({ message: 'Acceso denegado. Token no proporcionado.' });

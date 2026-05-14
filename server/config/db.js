@@ -62,6 +62,31 @@ const initDB = async () => {
       );
     `);
 
+    // ─── Tabla: documents ─────────────────────────────────────────────
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS documents (
+        id          SERIAL PRIMARY KEY,
+        nombre      VARCHAR(255) NOT NULL,
+        descripcion TEXT,
+        mimetype    VARCHAR(100) NOT NULL,
+        size        INTEGER      NOT NULL,
+        data        BYTEA        NOT NULL,
+        created_at  TIMESTAMP DEFAULT NOW()
+      );
+    `);
+
+    // ─── Tabla: apks ──────────────────────────────────────────────────
+    await pool.query(`
+      CREATE TABLE IF NOT EXISTS apks (
+        id          SERIAL PRIMARY KEY,
+        nombre      VARCHAR(255) NOT NULL,
+        descripcion TEXT,
+        size        INTEGER      NOT NULL,
+        data        BYTEA        NOT NULL,
+        created_at  TIMESTAMP DEFAULT NOW()
+      );
+    `);
+
     console.log('✅ Tablas verificadas/creadas correctamente');
 
   } catch (err) {

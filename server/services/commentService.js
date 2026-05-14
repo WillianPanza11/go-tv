@@ -18,3 +18,11 @@ export const create = async (videoId, autor, texto) => {
 export const remove = async (id) => {
   await commentRepository.remove(id);
 };
+
+export const getWatched = async (sessionId) => {
+  return await commentRepository.getWatched(sessionId);
+};
+
+export const markWatched = async (sessionId, videoId) => {
+  await commentRepository.markWatched(sessionId, videoId);
+};

@@ -25,6 +25,12 @@ const routes = [
     name: 'Admin',
     component: () => import('../views/AdminView.vue'),
     meta: { requiresAuth: true }
+  },
+  {
+    path: '/documentos',
+    name: 'Documentos',
+    component: () => import('../views/DocumentosView.vue'),
+    meta: { requiresAuth: true }
   }
 ]
 
@@ -33,7 +39,7 @@ const router = createRouter({
   routes
 })
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _from, next) => {
   const authStore = useAuthStore()
   if (to.meta.requiresAuth && !authStore.isAuthenticated) {
     next('/')
