@@ -30,7 +30,8 @@
 
             <div class="field">
               <label>Descripción</label>
-              <textarea v-model="videoForm.descripcion" rows="3" placeholder="Describe brevemente el tutorial..."></textarea>
+              <textarea v-model="videoForm.descripcion" rows="3"
+                placeholder="Describe brevemente el tutorial..."></textarea>
             </div>
 
             <div class="field">
@@ -45,25 +46,14 @@
 
             <div class="field">
               <label>Archivo de video *</label>
-              <div
-                class="dropzone"
-                :class="{ 'has-file': videoForm.file, 'dragover': isDragging }"
-                @dragover.prevent="isDragging = true"
-                @dragleave="isDragging = false"
-                @drop.prevent="handleDrop"
-                @click="$refs.fileInput.click()"
-              >
-                <input
-                  ref="fileInput"
-                  type="file"
-                  accept="video/*"
-                  style="display:none"
-                  @change="handleFileChange"
-                />
+              <div class="dropzone" :class="{ 'has-file': videoForm.file, 'dragover': isDragging }"
+                @dragover.prevent="isDragging = true" @dragleave="isDragging = false" @drop.prevent="handleDrop"
+                @click="$refs.fileInput.click()">
+                <input ref="fileInput" type="file" accept="video/*" style="display:none" @change="handleFileChange" />
                 <div v-if="!videoForm.file" class="dropzone-empty">
                   <span class="drop-icon">📁</span>
                   <p>Arrastra tu video aquí o <strong>haz clic</strong></p>
-                  <small>MP4, WebM, AVI — máx. 500MB</small>
+                  <small>Cualquier formato de video — máx. 500MB</small>
                 </div>
                 <div v-else class="dropzone-filled">
                   <span class="file-icon">🎬</span>
@@ -148,10 +138,7 @@
             <div class="video-item-thumb">▶</div>
             <div class="video-item-info">
               <p class="video-item-title">{{ video.titulo }}</p>
-              <span
-                class="video-item-cat"
-                :style="{ color: video.categoria_color || '#6b6b80' }"
-              >
+              <span class="video-item-cat" :style="{ color: video.categoria_color || '#6b6b80' }">
                 {{ video.categoria_nombre || 'Sin categoría' }}
               </span>
               <small class="video-item-date">{{ formatDate(video.created_at) }}</small>
@@ -172,22 +159,22 @@ import { useRouter } from 'vue-router'
 import { useAuthStore } from '../stores/auth.js'
 import api from '../config/axios.js'
 
-const router    = useRouter()
+const router = useRouter()
 const authStore = useAuthStore()
 
 // ── Estado ────────────────────────────────────────────
-const videos       = ref([])
-const categories   = ref([])
+const videos = ref([])
+const categories = ref([])
 const loadingVideos = ref(true)
-const uploading    = ref(false)
+const uploading = ref(false)
 const uploadProgress = ref(0)
-const isDragging   = ref(false)
-const fileInput    = ref(null)
+const isDragging = ref(false)
+const fileInput = ref(null)
 
 const videoForm = ref({ titulo: '', descripcion: '', categoriaId: '', file: null })
-const catForm   = ref({ nombre: '', color: '#e63946' })
-const videoMsg  = ref({ error: '', success: '' })
-const catMsg    = ref({ error: '', success: '' })
+const catForm = ref({ nombre: '', color: '#e63946' })
+const videoMsg = ref({ error: '', success: '' })
+const catMsg = ref({ error: '', success: '' })
 
 // ── Fetch ─────────────────────────────────────────────
 const fetchVideos = async () => {
@@ -242,15 +229,15 @@ const submitVideo = async () => {
     return
   }
 
-  uploading.value    = true
+  uploading.value = true
   uploadProgress.value = 0
 
   try {
     const formData = new FormData()
-    formData.append('titulo',      videoForm.value.titulo.trim())
+    formData.append('titulo', videoForm.value.titulo.trim())
     formData.append('descripcion', videoForm.value.descripcion.trim())
     formData.append('categoriaId', videoForm.value.categoriaId || '')
-    formData.append('video',       videoForm.value.file)
+    formData.append('video', videoForm.value.file)
 
     const { data } = await api.post('/videos', formData, {
       headers: { 'Content-Type': 'multipart/form-data' },
@@ -283,7 +270,7 @@ const submitCategory = async () => {
   try {
     const { data } = await api.post('/categories', {
       nombre: catForm.value.nombre.trim(),
-      color:  catForm.value.color
+      color: catForm.value.color
     })
     categories.value.push(data)
     catMsg.value.success = '✓ Categoría creada.'
@@ -374,14 +361,20 @@ onMounted(() => {
   font-size: 0.9rem;
   transition: color 0.2s;
 }
-.back-btn:hover { color: #e63946; }
+
+.back-btn:hover {
+  color: #e63946;
+}
 
 .brand-name {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 1.4rem;
   letter-spacing: 3px;
 }
-.accent { color: #e63946; }
+
+.accent {
+  color: #e63946;
+}
 
 .admin-badge {
   background: #e63946;
@@ -404,7 +397,11 @@ onMounted(() => {
   transition: all 0.2s;
   font-family: 'DM Sans', sans-serif;
 }
-.btn-logout:hover { border-color: #e63946; color: #e63946; }
+
+.btn-logout:hover {
+  border-color: #e63946;
+  color: #e63946;
+}
 
 /* ── Layout ────────────────────────────────────────── */
 .admin-layout {
@@ -427,7 +424,9 @@ onMounted(() => {
   gap: 20px;
 }
 
-.videos-panel { grid-row: span 2; }
+.videos-panel {
+  grid-row: span 2;
+}
 
 .panel-title {
   font-family: 'Bebas Neue', sans-serif;
@@ -480,12 +479,18 @@ onMounted(() => {
 
 .field input:focus,
 .field textarea:focus,
-.field select:focus { border-color: #e63946; }
+.field select:focus {
+  border-color: #e63946;
+}
 
 .field input::placeholder,
-.field textarea::placeholder { color: #3a3a4a; }
+.field textarea::placeholder {
+  color: #3a3a4a;
+}
 
-.field select option { background: #13131a; }
+.field select option {
+  background: #13131a;
+}
 
 /* ── Dropzone ──────────────────────────────────────── */
 .dropzone {
@@ -498,17 +503,40 @@ onMounted(() => {
 }
 
 .dropzone:hover,
-.dropzone.dragover { border-color: #e63946; background: rgba(230,57,70,0.04); }
+.dropzone.dragover {
+  border-color: #e63946;
+  background: rgba(230, 57, 70, 0.04);
+}
 
-.dropzone.has-file { border-style: solid; border-color: #4ade80; }
+.dropzone.has-file {
+  border-style: solid;
+  border-color: #4ade80;
+}
 
-.dropzone-empty { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.dropzone-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
 
-.drop-icon { font-size: 2rem; }
+.drop-icon {
+  font-size: 2rem;
+}
 
-.dropzone-empty p { color: #6b6b80; font-size: 0.9rem; }
-.dropzone-empty p strong { color: #e63946; }
-.dropzone-empty small { color: #3a3a4a; font-size: 0.78rem; }
+.dropzone-empty p {
+  color: #6b6b80;
+  font-size: 0.9rem;
+}
+
+.dropzone-empty p strong {
+  color: #e63946;
+}
+
+.dropzone-empty small {
+  color: #3a3a4a;
+  font-size: 0.78rem;
+}
 
 .dropzone-filled {
   display: flex;
@@ -517,7 +545,9 @@ onMounted(() => {
   text-align: left;
 }
 
-.file-icon { font-size: 1.8rem; }
+.file-icon {
+  font-size: 1.8rem;
+}
 
 .file-name {
   font-size: 0.9rem;
@@ -526,7 +556,10 @@ onMounted(() => {
   word-break: break-all;
 }
 
-.dropzone-filled small { color: #6b6b80; font-size: 0.78rem; }
+.dropzone-filled small {
+  color: #6b6b80;
+  font-size: 0.78rem;
+}
 
 .remove-file {
   margin-left: auto;
@@ -539,7 +572,10 @@ onMounted(() => {
   border-radius: 4px;
   transition: color 0.2s;
 }
-.remove-file:hover { color: #e63946; }
+
+.remove-file:hover {
+  color: #e63946;
+}
 
 /* ── Progreso ──────────────────────────────────────── */
 .progress-bar {
@@ -575,14 +611,14 @@ onMounted(() => {
 }
 
 .msg.error {
-  background: rgba(230,57,70,0.1);
-  border: 1px solid rgba(230,57,70,0.3);
+  background: rgba(230, 57, 70, 0.1);
+  border: 1px solid rgba(230, 57, 70, 0.3);
   color: #e63946;
 }
 
 .msg.success {
-  background: rgba(74,222,128,0.1);
-  border: 1px solid rgba(74,222,128,0.3);
+  background: rgba(74, 222, 128, 0.1);
+  border: 1px solid rgba(74, 222, 128, 0.3);
   color: #4ade80;
 }
 
@@ -604,13 +640,29 @@ onMounted(() => {
   min-height: 44px;
 }
 
-.btn-submit:hover:not(:disabled) { background: #c1121f; }
-.btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
-.btn-submit.secondary { background: #2a2a3a; }
-.btn-submit.secondary:hover:not(:disabled) { background: #3a3a4a; }
+.btn-submit:hover:not(:disabled) {
+  background: #c1121f;
+}
+
+.btn-submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn-submit.secondary {
+  background: #2a2a3a;
+}
+
+.btn-submit.secondary:hover:not(:disabled) {
+  background: #3a3a4a;
+}
 
 /* ── Categorías ────────────────────────────────────── */
-.color-row { display: flex; align-items: center; gap: 12px; }
+.color-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
 .color-picker {
   width: 48px;
@@ -654,7 +706,10 @@ onMounted(() => {
   flex-shrink: 0;
 }
 
-.cat-item span { flex: 1; font-size: 0.9rem; }
+.cat-item span {
+  flex: 1;
+  font-size: 0.9rem;
+}
 
 .btn-delete {
   background: none;
@@ -666,7 +721,10 @@ onMounted(() => {
   border-radius: 4px;
   transition: color 0.2s;
 }
-.btn-delete:hover { color: #e63946; }
+
+.btn-delete:hover {
+  color: #e63946;
+}
 
 /* ── Lista de videos ───────────────────────────────── */
 .video-list {
@@ -710,7 +768,9 @@ onMounted(() => {
   transition: border-color 0.2s;
 }
 
-.video-item:hover { border-color: #3a3a4a; }
+.video-item:hover {
+  border-color: #3a3a4a;
+}
 
 .video-item-thumb {
   width: 44px;
@@ -758,7 +818,7 @@ onMounted(() => {
 .spinner {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(255,255,255,0.3);
+  border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: #fff;
   border-radius: 50%;
   animation: spin 0.7s linear infinite;
@@ -771,11 +831,19 @@ onMounted(() => {
     grid-template-columns: 1fr;
     padding: 20px;
   }
-  .videos-panel { grid-row: span 1; }
-  .navbar { padding: 16px 20px; }
+
+  .videos-panel {
+    grid-row: span 1;
+  }
+
+  .navbar {
+    padding: 16px 20px;
+  }
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style>
