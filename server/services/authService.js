@@ -25,7 +25,7 @@ export const loginService = async (username, password) => {
 
   // Generar token JWT — expira en 8 horas
   const token = jwt.sign(
-    { username },
+    { username, role: 'admin' },
     process.env.JWT_SECRET,
     { expiresIn: '8h' }
   );

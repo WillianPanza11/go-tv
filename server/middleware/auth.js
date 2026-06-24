@@ -23,3 +23,10 @@ const authMiddleware = (req, res, next) => {
 };
 
 export default authMiddleware;
+
+export const requireAdmin = (req, res, next) => {
+  if (req.user?.role !== 'admin') {
+    return res.status(403).json({ message: 'Acceso restringido a administradores.' });
+  }
+  next();
+};

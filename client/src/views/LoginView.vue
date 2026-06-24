@@ -50,6 +50,10 @@
           <span v-else class="spinner"></span>
         </button>
 
+        <button type="button" class="btn-guest" :disabled="loading" @click="handleGuestLogin">
+          Acceder como invitado
+        </button>
+
       </form>
     </div>
   </div>
@@ -85,6 +89,19 @@ const handleLogin = async () => {
     router.push('/catalogo')
   } catch (err) {
     error.value = err.response?.data?.message || 'Credenciales incorrectas.'
+  } finally {
+    loading.value = false
+  }
+}
+
+const handleGuestLogin = async () => {
+  error.value   = ''
+  loading.value = true
+  try {
+    await authStore.loginAsGuest()
+    router.push('/catalogo')
+  } catch {
+    error.value = 'Error al acceder como invitado.'
   } finally {
     loading.value = false
   }
@@ -273,6 +290,30 @@ const handleLogin = async () => {
 
 .btn-login:disabled {
   opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* ── Botón Invitado ────────────────────────────────── */
+.btn-guest {
+  background: transparent;
+  color: #6b6b80;
+  border: 1px solid #2a2a3a;
+  border-radius: 8px;
+  padding: 12px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+  min-height: 44px;
+}
+
+.btn-guest:hover:not(:disabled) {
+  border-color: #6b6b80;
+  color: #f0f0f5;
+}
+
+.btn-guest:disabled {
+  opacity: 0.4;
   cursor: not-allowed;
 }
 
