@@ -10,7 +10,7 @@
       </div>
       <div class="navbar-actions">
         
-        <router-link to="/documentos" class="btn-admin btn-archivo-nav">subir Archivo 📄</router-link>
+        <router-link to="/documentos" class="btn-admin btn-archivo-nav">subir/bajar Archivo 📄</router-link>
         <button v-if="!authStore.isGuest" class="btn-admin btn-apk-nav" @click="openPinModal('apk')">📦 Subir APK</button>
         <button v-if="!authStore.isGuest" class="btn-admin btn-video-nav" @click="openPinModal('video')">+ Subir Video 🎦</button>
         <button class="btn-logout" @click="handleLogout">Salir</button>

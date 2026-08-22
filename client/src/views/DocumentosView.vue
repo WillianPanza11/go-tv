@@ -23,7 +23,7 @@
           <div class="section-left">
             <span class="section-emoji">📄</span>
             <span class="section-label">Subir archivo</span>
-            <span class="section-hint">Imágenes, PDF, Word, Excel…</span>
+            <span class="section-hint">Imágenes, PDF, Word, Excel, comprimidos…</span>
           </div>
           <span class="section-action">Nuevo +</span>
         </div>
@@ -123,14 +123,14 @@
           id="doc-file-input"
           ref="fileInput"
           type="file"
-          accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx"
+          accept=".jpg,.jpeg,.png,.gif,.webp,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.rar,.7z,.gz,.tar"
           style="display:none"
           @change="handleFileChange"
         />
         <div v-if="!selectedFile" class="drop-placeholder">
           <span class="drop-icon">📄</span>
           <p>Arrastra un archivo o haz clic para seleccionar</p>
-          <small>Imágenes · PDF · Word · Excel · PowerPoint · Máx. 50 MB</small>
+          <small>Imágenes · PDF · Word · Excel · PowerPoint · Comprimidos · Máx. 50 MB</small>
         </div>
         <div v-else class="file-preview" @click.prevent>
           <img v-if="previewUrl" :src="previewUrl" class="img-preview" alt="preview" />
@@ -229,9 +229,21 @@ const ICON_MAP = {
   'application/vnd.openxmlformats-officedocument.presentationml.presentation': '📙',
 }
 
+const COMPRESSED_MIMETYPES = [
+  'application/zip',
+  'application/x-zip-compressed',
+  'application/x-7z-compressed',
+  'application/vnd.rar',
+  'application/x-rar-compressed',
+  'application/gzip',
+  'application/x-gzip',
+  'application/x-tar',
+]
+
 const mimetypeIcon = (mime) => {
   if (!mime) return '📄'
   if (mime.startsWith('image/')) return '🖼️'
+  if (COMPRESSED_MIMETYPES.includes(mime)) return '🗜️'
   return ICON_MAP[mime] || '📄'
 }
 
